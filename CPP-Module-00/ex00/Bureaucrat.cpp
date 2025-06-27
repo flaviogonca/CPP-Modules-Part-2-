@@ -13,7 +13,7 @@
 #include "Bureaucrat.hpp"
 
 
-Bureaucrat::Bureaucrat()
+Bureaucrat::Bureaucrat(): name("Default"), grade(1)
 {
 }
 
@@ -21,54 +21,66 @@ Bureaucrat::~Bureaucrat()
 {
 }
 
-const std::string& Bureaucrat::getName() const
+Bureaucrat::Bureaucrat(std::string name, short grade): name(name)
+{
+    if (grade < 1)
+        throw GradeTooHighException();
+    if (grade > 150)
+        throw GradeTooLowException();
+    this->grade = grade;
+}
+
+Bureaucrat::Bureaucrat(const Bureaucrat& original): name(original.name), grade(original.grade)
+{
+}
+
+Bureaucrat& Bureaucrat::operator=(const Bureaucrat& original)
+{
+    if (&original != this)
+    {
+        this->grade = original.getGrade();
+    }
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& obj)
+{
+    os << obj.getName() << ", bureaucrat grade " << obj.getGrade() << ".";
+    return os;
+}
+
+std::string Bureaucrat::getName() const
 {
     return this->name;
 }
 
-const short& Bureaucrat::getGrade() const
+short Bureaucrat::getGrade() const
 {
     return this->grade;
 }
 
 void Bureaucrat::increment()
 {
-    try
+    if ((this->grade - 1) < 1)
     {
-        if ((this->grade - 1) < 1)
-            throw ;
-        this->grade--;
+        throw Bureaucrat::GradeTooHighException();
     }
-    catch (const std::exception & e)
-    {
-        std::cout << e.what() << std::endl;
-    }
+    this->grade--;
 }
 
 void Bureaucrat::decrement()
 {
-    try
-    {
-        if ((this->grade + 1) > 150)
-            throw ;
-        this->grade++;
-    }
-    catch (const std::exception & e)
-    {
-        std::cout << e.what() << std::endl;
-    }
+    if ((this->grade + 1) > 150)
+        throw Bureaucrat::GradeTooLowException();
+    this->grade++;
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
-    std::string msg = "Grade too High";
-
-    return msg.c_str();
+    return "Grade too High. The grade range is 1-150";
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw()
 {
-    std::string msg = "Grade too Low";
-
-    return msg.c_str();
+    return "Grade too Low. The grade range is 1-150";
 }
