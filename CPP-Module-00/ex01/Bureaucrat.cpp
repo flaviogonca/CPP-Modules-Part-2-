@@ -84,3 +84,17 @@ const char* Bureaucrat::GradeTooLowException::what() const throw()
 {
     return "Grade too Low. The grade range is 1-150";
 }
+
+void Bureaucrat::signForm(Form &form)
+{
+    try
+    {
+        form.beSigned(*this);
+        std::cout << this->getName() << " signed " << form.getFormName() << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << this->getName() << " couldn’t signed " << form.getFormName() << " because ";
+        std::cerr << e.what() << std::endl;
+    }
+}

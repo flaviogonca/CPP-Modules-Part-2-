@@ -15,6 +15,8 @@
 
 #include "Bureaucrat.hpp"
 
+class Bureaucrat;
+
 class Form
 {
     private:
@@ -34,6 +36,7 @@ class Form
         std::string getFormName() const;
         short getFormGradeToSign() const;
         short getFormGradeToExec() const;
+        bool getFormStatus() const;
 
         void beSigned(const Bureaucrat& original);
 

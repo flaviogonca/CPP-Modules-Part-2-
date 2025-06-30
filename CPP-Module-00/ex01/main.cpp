@@ -30,57 +30,52 @@ int main(void)
     {
         std::cout << "Error: " << e.what() << std::endl;
     }
-
-    std::cout << "\n=========== 2* : Invalid Bureaucrat ===========\n";
+    std::cout << "\n=========== 2* : Valid Form ===========\n";
     try
     {
-        Bureaucrat nurse("Maria", 0);
-        std::cout << nurse << std::endl;
-        std::cout << "decrementing grade..." << std::endl;
-        nurse.decrement();
-        std::cout << nurse << std::endl;
-        std::cout << "Decrementing grade..." << std::endl;
-        nurse.increment();
-        std::cout << nurse << std::endl;
+        Form list("presença", 3, 3);
+        Bureaucrat police("Isaac", 1);
+        std::cout << list << std::endl;
+        std::cout << "Bureaucrat " << police.getName() << " is trying to assign ..." << std::endl;
+        police.signForm(list);
+        std::cout << list << std::endl;
     }
-    catch (const std::exception &e)
+    catch(const std::exception& e)
     {
-        std::cout << "Error: " << e.what() << std::endl;
+        std::cerr << "Form Error: " << e.what() << '\n';
     }
-
-    std::cout << "\n=========== 3* : Copy Bureaucrat ===========\n";
+    std::cout << "\n=========== 3* : Default Form ===========\n";
     try
     {
-        Bureaucrat police("Isaac", 10);
-        Bureaucrat nurse(police);
-        std::cout << nurse << std::endl;
-        std::cout << "decrementing grade..." << std::endl;
-        nurse.decrement();
-        std::cout << nurse << std::endl;
-        std::cout << "Decrementing grade..." << std::endl;
-        nurse.increment();
-        std::cout << nurse << std::endl;
+        Form list;
+        std::cout << list << std::endl;
     }
-    catch (const std::exception &e)
+    catch(const std::exception& e)
     {
-        std::cout << "Error: " << e.what() << std::endl;
+        std::cerr << "Form Error: " << e.what() << '\n';
     }
-
-    std::cout << "\n=========== 4* : Assigning Bureaucrat ===========\n";
+    std::cout << "\n=========== 4* : Assign Form ===========\n";
     try
     {
-        Bureaucrat nurse("Maria", 42);
-        std::cout << nurse << std::endl;
-        Bureaucrat police("Isaac", 10);
-        std::cout << police << std::endl;
+        Form list1("List", 5, 10);
+        Form list2;
 
-        police = nurse;
-        std::cout << police << std::endl;
-        std::cout << nurse << std::endl;
+        std::cout << list1 << std::endl;
+        std::cout << list2 << std::endl;
+
+        Bureaucrat police("Luvuvamo", 1);
+        std::cout << "Bureaucrat " << police.getName() << " is trying to assign ..." << std::endl;
+        police.signForm(list1);
+        
+        std::cerr << "Assigning form ..." << std::endl;
+        list2 = list1;
+
+        std::cout << list1 << std::endl;
+        std::cout << list2 << std::endl;
     }
-    catch (const std::exception &e)
+    catch(const std::exception& e)
     {
-        std::cout << "Error: " << e.what() << std::endl;
+        std::cerr << "Form Error: " << e.what() << '\n';
     }
     return 0;
 }
