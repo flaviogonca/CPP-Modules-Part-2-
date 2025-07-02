@@ -14,6 +14,7 @@
 #include "AForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int main(void)
 {
@@ -36,17 +37,41 @@ int main(void)
     try
     {
         AForm * phoneBook = new RobotomyRequestForm("book");
-        Bureaucrat jury("Gonçalves", 45);
+        Bureaucrat judge("Gonçalves", 45);
         Bureaucrat Professor("Pr", 72);
 
         Professor.signForm(*phoneBook);
-        jury.executeForm(*phoneBook);
+        judge.executeForm(*phoneBook);
         std::cout << *phoneBook << std::endl;
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
-    
+    std::cout << "\n=========== 3* Test ===========\n";
+    try
+    {
+        AForm * sentence = new PresidentialPardonForm("robber");
+        Bureaucrat judge("Almeida", 3);
+        Bureaucrat police("James", 5);
+
+        std::cout << judge << std::endl << police << std::endl;
+        judge.signForm(*sentence);
+        police.executeForm(*sentence);
+        std::cout << *sentence << std::endl;
+        std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+        AForm * sentence2 = new PresidentialPardonForm("robber");
+        Bureaucrat judge2("Almeida", 50);
+        Bureaucrat police2("James", 5);
+
+        std::cout << judge2 << std::endl << police2 << std::endl;
+        judge2.signForm(*sentence2);
+        police2.executeForm(*sentence2);
+        std::cout << *sentence2 << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
     return 0;
 }
