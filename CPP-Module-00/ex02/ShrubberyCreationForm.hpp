@@ -13,20 +13,29 @@
 #ifndef SHRUBBERYCREATION
 # define SHRUBBERYCREATION
 
+#include <fstream>
 #include "AForm.hpp"
 
 class ShrubberyCreationForm: public AForm
 {
+    private:
+        std::string target;
+
     public:
         ShrubberyCreationForm();
         ~ShrubberyCreationForm();
-        ShrubberyCreationForm(const std::string name);
+        ShrubberyCreationForm(const std::string target);
         ShrubberyCreationForm(const ShrubberyCreationForm& original);
         ShrubberyCreationForm& operator=(const ShrubberyCreationForm& original);
 
         void execute(Bureaucrat const & executor) const;
 
         class ShrubberyException: public std::exception
+        {
+            public:
+                const char* what() const throw();
+        };
+        class ShrubberyExceptionFileCreation: public std::exception
         {
             public:
                 const char* what() const throw();
