@@ -11,10 +11,7 @@
 /* ************************************************************************** */
 
 
-#include "AForm.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
 
 int main(void)
 {
@@ -28,6 +25,7 @@ int main(void)
         Pr.signForm(*list);
         police.executeForm(*list);
         std::cout << *list << std::endl;
+        delete list;
     }
     catch(const std::exception& e)
     {
@@ -43,6 +41,7 @@ int main(void)
         Professor.signForm(*phoneBook);
         judge.executeForm(*phoneBook);
         std::cout << *phoneBook << std::endl;
+        delete phoneBook;
     }
     catch(const std::exception& e)
     {
@@ -68,6 +67,24 @@ int main(void)
         judge2.signForm(*sentence2);
         police2.executeForm(*sentence2);
         std::cout << *sentence2 << std::endl;
+        delete sentence2;
+        delete sentence;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    std::cout << "\n=========== 4* Test ===========\n";
+    try
+    {
+        Intern someRandomIntern;
+        AForm* rrf;
+        (void)rrf;
+        rrf = someRandomIntern.makeForm("Presidential Pardon", "Bender");
+        delete rrf;
+        rrf = NULL;
+        rrf = someRandomIntern.makeForm("Invalid Form name", "Bender");
+        delete rrf;
     }
     catch(const std::exception& e)
     {
