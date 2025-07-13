@@ -37,8 +37,13 @@ const char* RobotomyRequestForm::RobotomyRequestException::what() const throw()
 
 void RobotomyRequestForm::execute(Bureaucrat const & executor) const
 {
-        if ((executor.getGrade() > getFormGradeToExec()) || (getFormStatus() == false))
-            throw RobotomyRequestException();
-        std::cout << "Bzzzzzzzzzz........." << std::endl;
+    if ((executor.getGrade() > getFormGradeToExec()) || (getFormStatus() == false))
+        throw RobotomyRequestException();
+    std::cout << "Bzzzzzzzzzz............" << std::endl;
+    std::srand(std::time(NULL));
+    if (std::rand() % 2)
         std::cout << target << " has been robotomized successfully 50% of the time" << std::endl;
+    else
+        std::cout << target << " robotomization has failed" << std::endl;
+
 }
