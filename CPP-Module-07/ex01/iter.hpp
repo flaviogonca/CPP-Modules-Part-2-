@@ -18,15 +18,8 @@
 template <typename T>
 void iter(T *address, size_t size, void (*f)(T &))
 {
-    try
-    {
-        for (size_t i = 0; i < size; i++)
-            (*f)(address[i]);
-    }
-    catch(const std::exception& e)
-    {
-    }
-    
+    for (size_t i = 0; i < size; i++)
+        (*f)(address[i]);
 }
 
 template <typename T>
