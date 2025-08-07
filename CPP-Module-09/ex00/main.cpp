@@ -18,7 +18,9 @@ int main(int ac, char **av)
     {
         if (ac != 2)
             throw std::runtime_error("Error: could not open file.");
-        BitcoinExchange btc(av[1]);
+        BitcoinExchange btc;
+        // btc.loadDataBase(av[1]);
+        (void)av;
     }
     catch(const std::exception& e)
     {

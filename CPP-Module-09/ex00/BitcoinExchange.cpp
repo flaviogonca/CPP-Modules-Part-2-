@@ -15,13 +15,6 @@
 
 BitcoinExchange::BitcoinExchange()
 {
-    loadDataBase("");
-    loadDataBase("data.csv");
-}
-
-BitcoinExchange::BitcoinExchange(std::string fileName)
-{
-    loadDataBase(fileName);
     loadDataBase("data.csv");
 }
 
@@ -29,26 +22,69 @@ BitcoinExchange::~BitcoinExchange() {}
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &original)
 {
-    dataBase[0] = original.dataBase[0];
-    dataBase[1] = original.dataBase[1];
+    dataBase = original.dataBase;
 }
 
 BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange &original)
 {
     if (this != &original)
     {
-        dataBase[0] = original.dataBase[0];
-        dataBase[1] = original.dataBase[1];
+        dataBase = original.dataBase;
     }
     return *this;
+}
+
+std::string trimmedStr(const std::string& s)
+{
+    size_t start = s.find_first_not_of(" \t");
+    if (start == std::string::npos)
+        return ""; 
+    size_t end = s.find_last_not_of(" \t");
+    return s.substr(start, end - start + 1);
+}
+
+bool checkDateFormat(std::string date)
+{
+
 }
 
 void BitcoinExchange::processFile(std::string fileName)
 {
     size_t index = 1;
-    if (fileName.compare("data.csv"))
-        --index;
-    
+    std::string line;
+    std::string date;
+    std::string valueHeader;
+    float value;
+
+    std::ifstream file(fileName.c_str());
+
+    if (!file.is_open())
+        throw std::runtime_error("Error: could not open file.");
+
+    while (line.empty())
+        if (!std::getline(file, line))
+            throw std::runtime_error("Error: empty database fil");
+
+    std::stringstream ss(line);
+
+    if (!std::getline(ss, date, ',') || !std::getline(ss, valueHeader, ','))
+        throw std::runtime_error("Wrong Header in the database file");    
+
+    date = trimmedStr(date);
+    valueHeader = trimmedStr(valueHeader);
+    if (date != "date" || valueHeader != "exchange_rate")
+        throw std::runtime_error("Wrong Header in the database file");    
+
+    while (std::getline(file, line))
+    {
+        // std::stringstream ss2(line);
+        // if (std::getline(ss2, date, ','))
+        std::cout << line << std::endl;
+    }
+
+    std::cout << fileName << " opened sucessfully -> " << index << std::endl;
+
+    file.close();
 }
 
 void handleFileName(std::string fileName)
@@ -56,11 +92,12 @@ void handleFileName(std::string fileName)
     size_t size = fileName.length();
     if(fileName.at(size - 1) == 'v' && fileName.at(size - 2) == 's' && fileName.at(size - 3) == 'c' && fileName.at(size - 4) == '.' && (size - 4) != 0)
         return ;
+    
     throw std::runtime_error("Wrong file extansion");
 }
 
 void BitcoinExchange::loadDataBase(std::string fileName)
 {
-    handleFileName(fileName);
+    // handleFileName(fileName);
     processFile(fileName);
 }

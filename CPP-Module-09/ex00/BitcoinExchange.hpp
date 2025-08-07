@@ -13,22 +13,23 @@
 #ifndef BITCOINEXCHANGE_HPP
 # define BITCOINEXCHANGE_HPP
 
-#include <iostream>
-#include <string>
 #include <map>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <iostream>
 #include <stdexcept>
 
 class BitcoinExchange
 {
     private:
-        std::map<std::string, float> dataBase[2];
+        std::map<std::string, float> dataBase;
         
         void processFile(std::string fileName);
 
     public:
         BitcoinExchange();
         ~BitcoinExchange();
-        BitcoinExchange(std::string fileName);
         BitcoinExchange(const BitcoinExchange &original);
         BitcoinExchange& operator=(const BitcoinExchange &original);
 
@@ -36,5 +37,7 @@ class BitcoinExchange
 };
 
 void handleFileName(std::string fileName);
+std::string trimmedStr(const std::string& s);
+bool checkDateFormat(std::string date);
 
 #endif
