@@ -37,7 +37,9 @@ class BitcoinExchange
 };
 
 void handleFileName(std::string fileName);
+void handleDate(std::string fileName);
 std::string trimmedStr(const std::string& s);
-bool checkDateFormat(std::string date);
+void chekValue(std::string value, int lineCount);
+void checkDate(std::string date, int lineCount);
 
 #endif
