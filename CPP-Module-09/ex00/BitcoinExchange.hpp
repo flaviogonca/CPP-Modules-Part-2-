@@ -24,8 +24,7 @@ class BitcoinExchange
 {
     private:
         std::map<std::string, float> dataBase;
-        
-        void processFile(std::string fileName);
+        void exchange(std::string date, std::string value);
 
     public:
         BitcoinExchange();
@@ -34,10 +33,10 @@ class BitcoinExchange
         BitcoinExchange& operator=(const BitcoinExchange &original);
 
         void loadDataBase(std::string fileName);
+        void loadInputFile(std::string fileName);
 };
 
 void handleFileName(std::string fileName);
-void handleDate(std::string fileName);
 std::string trimmedStr(const std::string& s);
 void chekValue(std::string value, int lineCount);
 void checkDate(std::string date, int lineCount);
