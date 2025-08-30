@@ -24,16 +24,28 @@ The process can be summarized in four key phases:
 
 3. **Insert the Smaller Elements Efficiently**  
    - Insert the "smaller" partner of the first pair at the beginning.  
-   - Insert the other small elements one by one, using **binary insertion** to minimize comparisons.  
+   - Insert the other small elements one by one into the backbone list.  
+   - ⚡ Instead of inserting in a simple sequential order, the algorithm uses the **Jacobsthal sequence** to decide the insertion order.  
+
+   ### 🔎 Why Jacobsthal?  
+   The Jacobsthal sequence is defined as: J(0) = 0, J(1) = 1, J(n) = J(n-1) + 2*J(n-2)
+
+Sequence: `0, 1, 1, 3, 5, 11, 21, ...`  
+
+Using this sequence to guide the order of insertions ensures that:  
+- Each smaller element is inserted into a **narrower, predictable interval** of the backbone list.  
+- Fewer comparisons are required overall compared to naive sequential insertion.  
+- This is the key reason Ford–Johnson achieves near-optimal comparison counts.
+
+Example: If we have `smalls = [s1, s2, s3, s4]`, instead of inserting in the order `s1, s2, s3, s4`, the Jacobsthal sequence might suggest an order like `s1, s3, s2, s4`, which reduces redundant comparisons.
 
 4. **Insert Any Leftover (Unpaired) Element**  
-   - Finally, insert any leftover element (if `n` was odd).  
+- Finally, insert any leftover element (if `n` was odd).  
 
 ---
 
 ## 🧩 Example: Sorting 13 Numbers
 Let’s sort this list step by step: [7, 3, 11, 2, 9, 5, 13, 1, 12, 4, 8, 10, 6]
-
 
 ### Step 1: Pair & Compare
 Pairs and results:
@@ -54,26 +66,13 @@ Leftover = `6`
 ### Step 2: Recursively Sort Bigs
 Sort `[7,11,9,13,12,10]` → results in: [7, 9, 10, 11, 12, 13]
 
-
 ---
 
-### Step 3: Insert Smalls
-Insert `[3,2,5,1,4,8]` one by one (binary insertion):
+### Step 3: Insert Smalls (with Jacobsthal ordering)
+Insert `[3,2,5,1,4,8]` into the backbone `[7,9,10,11,12,13]`.  
+The Jacobsthal sequence suggests an order like: `s1, s3, s2, s4, ...`  
 
-1 → `[1,7,9,10,11,12,13]`  
-2 → `[1,2,7,9,10,11,12,13]`  
-3 → `[1,2,3,7,9,10,11,12,13]`  
-4 → `[1,2,3,4,7,9,10,11,12,13]`  
-5 → `[1,2,3,4,5,7,9,10,11,12,13]`  
-8 → `[1,2,3,4,5,7,8,9,10,11,12,13]`  
-
----
-
-### Step 4: Insert Leftover
-Insert 6 → [1, 2,3,4,5,6,7,8,9,10,11,12,13]
-
-
-✅ Fully sorted!
+Final result after all insertions (and leftover 6): [1,2,3,4,5,6,7,8,9,10,11,12,13]
 
 ---
 
