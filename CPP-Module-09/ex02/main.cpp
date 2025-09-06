@@ -21,6 +21,7 @@ int main(int ac, char **av)
 		PmergeMe _pmergeMe;
 
 		_pmergeMe.loadInput(av + 1);
+		_pmergeMe.sort();
 	}
 	catch(const std::exception& e)
 	{
